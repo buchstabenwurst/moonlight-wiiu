@@ -7,6 +7,8 @@
 #include <padscore/wpad.h>
 #include <coreinit/time.h>
 #include <coreinit/alarm.h>
+#include <sysapp/launch.h>
+#include <whb/gfx.h>
 
 #define millis() OSTicksToMilliseconds(OSGetTime())
 
@@ -141,8 +143,8 @@ void wiiu_input_update(void) {
     // If the button was just pressed, reset to current time
     if (vpad.trigger & VPAD_BUTTON_HOME) home_pressed[controllerNumber] = millis();
 
-    if (btns & VPAD_BUTTON_HOME && millis() - home_pressed[controllerNumber] > 3000) {
-      state = STATE_STOP_STREAM;
+    if (btns & VPAD_BUTTON_HOME && millis() - home_pressed[controllerNumber] > 15000) {
+        wiiu_proc_set_home_enabled(1);
       return;
     }
 
